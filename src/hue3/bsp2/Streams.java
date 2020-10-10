@@ -2,6 +2,7 @@ package hue3.bsp2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -14,24 +15,27 @@ public class Streams {
     }
 
     public List<String> upperCase(String[] strings) {
-        /*
-        List<String> erg = Arrays.asList(strings);
-
-        erg = erg.stream().map(s -> s.toUpperCase()).collect(Collectors.toList());
-        return erg;*/
 
         return Arrays.asList(strings).stream().map(s -> s.toUpperCase()).collect(Collectors.toList());
     }
 
     public Weapon findWeaponWithLowestDamage(List<Weapon> weapons) {
 
-        weapons.stream().map(Weapon -> Weapon.getDamage());
-        weapons.stream().filter(Weapon -> Weapon.getDamage().);
-
+        return weapons.stream().min(new Comparator<Weapon>() {
+            @Override
+            public int compare(Weapon o1, Weapon o2) {
+                return o1.getDamage() - o2.getDamage();
+            }
+        }).get();
     }
 
     public Weapon findWeaponWithHighestStrength(List<Weapon> weapons) {
-        //implement this
+        return weapons.stream().max(new Comparator<Weapon>() {
+            @Override
+            public int compare(Weapon o1, Weapon o2) {
+                return o1.getMinStrength() - o2.getMinStrength();
+            }
+        }).get();
     }
 
     public List<Weapon> collectMissileWeapons(List<Weapon> weapons) {
@@ -39,7 +43,12 @@ public class Streams {
     }
 
     public Weapon findWeaponWithLongestName(List<Weapon> weapons) {
-        //implement this
+        return weapons.stream().max(new Comparator<Weapon>() {
+            @Override
+            public int compare(Weapon o1, Weapon o2) {
+                return o1.getName().length() - o2.getName().length();
+            }
+        }).get();
     }
 
     public List<String> toNameList(List<Weapon> weapons) {
@@ -64,6 +73,6 @@ public class Streams {
     }
 
     public void increaseValuesByTenPercent(List<Weapon> weapons) {
-        //implement this
+        weapons.stream().forEach(weapon -> weapon.setValue((int) (weapon.getValue() * 1.1)));
     }
 }
