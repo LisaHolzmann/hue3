@@ -79,7 +79,18 @@ public class Weapon {
 
     @Override
     public boolean equals(Object obj) {
-        //implement this
+        if (obj instanceof Weapon) {
+            Weapon weapon = (Weapon) obj;
+            return name.equals(weapon.name)
+                    && combatType == weapon.combatType
+                    && damageType == weapon.damageType
+                    && damage == weapon.damage
+                    && speed == weapon.speed
+                    && minStrength == weapon.minStrength
+                    && value == weapon.value;
+        } else {
+            return false;
+        }
     }
 
     @Override

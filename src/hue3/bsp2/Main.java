@@ -5,8 +5,14 @@
  */
 package hue3.bsp2;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.Normalizer;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -17,8 +23,23 @@ public class Main {
     public static int[] zufall = new int[10000];
     public static String[] line = new String[10];
 
-    public static void main(String[] args) {
+    private static List<Weapon> list = new LinkedList<>();
 
+    public static void main(String[] args) throws IOException {
+
+        list = Files.lines(new File("weapons.csv").toPath())
+                .skip(1)
+                .map(s -> s.split(";"))
+                .map(s -> new Weapon(
+                s[0],
+                CombatType.valueOf(s[1]),
+                DamageType.valueOf(s[2]),
+                Integer.parseInt(s[3]),
+                Integer.parseInt(s[4]),
+                Integer.parseInt(s[5]),
+                Integer.parseInt(s[6])
+        ))
+                .collect(Collectors.toList());
     }
 
     public void befuellenInt() {
